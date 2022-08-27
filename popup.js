@@ -13,6 +13,7 @@ $(document).ready(function() {
 		chrome.tabs.query(params, gotTabs);
 
 		function gotTabs(tabs){
+			
 			chrome.tabs.sendMessage(tabs[0].id, {txt: "edit"});
 		}
 	}
