@@ -2,7 +2,7 @@
 	"manifest_version": 3,
 	"name": "Cookie Blocker",
 	"description": "Lets you hide cookie popups",
-	"version": "0.3",
+	"version": "0.4",
 	"icons": {"128": "icon_128.png"},
 	"action": {
 		"default_icon": "icon.png",
@@ -16,7 +16,7 @@
             "content.js"
         ]
     }],
-	"permissions": ["activeTab", "tabs"],
+	"permissions": ["activeTab", "tabs", "scripting"],
 	"background": {
 		"service_worker": "background.js"
 	}

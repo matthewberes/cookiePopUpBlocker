@@ -1,15 +1,18 @@
 let editOn = 0;
-
-chrome.runtime.sendMessage({test: "test"});
+var currTab = "";
 
 chrome.runtime.onMessage.addListener(gotMessage);
-chrome.runtime.lastError;
-
-function gotMessage(message, sender, sendResponse){
-	//console.log(message.txt);
-	//console.log(editOn);	
-	editOn = 1;
-	document.body.style.cursor = "crosshair";
+function gotMessage(message, sender, sendResponse){	
+	currTab = message.tab;
+	if(message.txt == "edit"){	
+		editOn = 1;
+		document.body.style.cursor = "crosshair";
+		chrome.runtime.sendMessage({tabId: message.tab, txt: "insert"});
+	}if(message.txt == "exit"){
+		editOn = 0;
+		document.body.style.cursor = "";
+		chrome.runtime.sendMessage({tabId: message.tab, txt: "remove"});
+	}
 }
 
 $('div').click(function() {
@@ -17,8 +20,8 @@ $('div').click(function() {
 		return
 	}
 	var c = $(this).attr('class');
-	//console.log("selected div = " + c);
 	document.getElementsByClassName(c)[0].style.visibility = "hidden";
-	editOn = 0;
 	document.body.style.cursor = "";
+	editOn = 0;
+	chrome.runtime.sendMessage({tabId: currTab, txt: "remove"});
 });
