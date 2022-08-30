@@ -8,10 +8,11 @@ domain = url.hostname;
 
 //checks for saved preference
 chrome.storage.local.get(obj, function(data){
-	var myD = data; 
-	if(myD[domain]){
-		if(document.getElementsByClassName(myD[domain])[0]){
-			document.getElementsByClassName(myD[domain])[0].style.visibility = "hidden";
+	if(data[domain]){
+		if(document.getElementsByClassName(data[domain][0])[0]){
+			for (var i = 0; i < data[domain].length; i++) {
+				document.getElementsByClassName(data[domain][i])[0].style.visibility = "hidden";
+			}
 		}
 	}
 });
@@ -29,6 +30,14 @@ function gotMessage(message, sender, sendResponse){
 		editOn = 0;
 		document.body.style.cursor = "";
 		chrome.runtime.sendMessage({txt: "remove"});
+	}if(message.txt == "remove"){
+		obj = {};
+		obj[domain] = [];
+		chrome.storage.local.set(obj);
+	}if(message.txt == "qc"){
+		obj = {};
+		obj["quickClick"] = message.value;
+		chrome.storage.local.set(obj);
 	}
 }
 
@@ -43,8 +52,11 @@ $('div').click(function() {
 	chrome.runtime.sendMessage({txt: "remove"});
 	//handle storage object creation
 	//make json from domain and c	
-	obj = {};
-	obj[domain] = c;
-	chrome.storage.local.set(obj);
-	chrome.storage.local.get(obj, function(data){console.log(data);});
+	chrome.storage.local.get(obj, function(data){
+		if(!data[domain]){
+			data[domain] = [];
+		}
+		data[domain].push(c);
+		chrome.storage.local.set(data);
+	});
 });

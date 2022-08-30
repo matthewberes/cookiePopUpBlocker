@@ -2,15 +2,35 @@
 <html>
 <script src="jquery-3.1.1.js"></script>
 <script src="popup.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title></title>
 </head>
 <body>
-<p id="prompt">Click here to remove a page element</p>
-<input type="button" class="button" id="editMode" value="Remove Popup">
-<input type="button" class="button" id="cancel" value="Cancel" style="display: none;">
+<div id="home">
+	<i id="gearIn" class="fa fa-gear" style="position: absolute; top: 0; right: 0; text-align:right; padding-right: 1px; padding-top: 1px;"></i>
+	<p id="prompt">Click here to remove a page element</p>
+	<input type="button" class="button" id="editMode" value="Remove Popup"/>
+	<input type="button" class="button" id="cancel" value="Cancel" style="display: none;"/>
+</div>
+<div id="settings"  style="display: none;">
+	<i id="homeIcon" class="fa fa-home" style="position: absolute; top: 0; left: 0; text-align:right; padding-left: 1px; padding-top: 1px;"></i>
+	<p>Quick Click</p><br>
+	<select class="select" id="quickClick" style="width: 50px;">
+		<option value="no">NO</option>
+		<option value="yes">YES</option>
+	</select>
+	<br>
+	<br>
+	<input type="button" class="button" id="remove" value="Reset Site"/>
+	<i id="question" class="fa fa-question" style="position: absolute; bottom: 0; right: 0; text-align:right; padding-right: 1px; padding-top: 1px;"></i>
+</div>
+<div id="help" style="display: none;">
+	<i id="back" class="fa fa-arrow-left" style="position: absolute; top: 0; left: 0; text-align:right; padding-left: 1px; padding-top: 1px;"></i>
+	<span><span style="font-weight: bold;">Quick Click:</span> Toolbar button turns on edit mode</span><br><span style="font-weight: bold;">Reset Site:</span><span style="padding-bottom: 8px;"> Reset data stored for this website</span>
+</div>
 </body>
 </html>
-<style type="text/css">html{width: 140px; height: 75px; background-image: url('cookie.png');}p{font-family: serif; text-align: center; font-weight: bold;}.button{margin: 0; position: absolute; top: 80%; left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);}</style>
+<style type="text/css">html{width: 140px; height: 75px; background-image: url('cookie.png');}p{font-family: serif; text-align: center; font-weight: bold;}span{font-family: serif;}.button{margin: 0; position: absolute; top: 80%; left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);}.select{margin: 0; position: absolute; top: 38%; left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);}i:hover{color: grey;}</style>
