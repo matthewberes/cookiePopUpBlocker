@@ -12,7 +12,7 @@ $(document).ready(function() {
 		//send message to content script
 		chrome.tabs.query(params, gotTabs);
 		function gotTabs(tabs){	
-			chrome.tabs.sendMessage(tabs[0].id, {tab: tabs[0].id, txt: "edit"});
+			chrome.tabs.sendMessage(tabs[0].id, {tab: tabs[0].id, tabs: tabs, txt: "edit"});
 		}
 	}
 	document.getElementById("cancel").onclick = function() {CANCEL()};
