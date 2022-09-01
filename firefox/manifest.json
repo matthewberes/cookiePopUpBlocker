@@ -1,8 +1,8 @@
 {
 	"manifest_version": 2,
 	"name": "Cookie Popup Blocker",
-	"description": "Lets you hide cookie popups",
-	"version": "0.9.9",
+	"description": "Lets you hide annoying popups",
+	"version": "1.0",
 	"icons": {"150": "icon_128.png"},
 	"browser_action": {
 		"default_icon": "icon.png",

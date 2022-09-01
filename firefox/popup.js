@@ -1,15 +1,24 @@
+//Matt Beres August 2022
+//browser extension to remove elements from a webpage, intended for pop ups
+//saves all the elements you want to hide in a unique array for each website in storage and automatically hides them on future visits
+
+//handles control panel interaction
 $(document).ready(function() {
+	//arguments for query calls
 	let params = {
 		active: true,
 		currentWindow: true
 	}
+	//user data
 	var obj;
 
 	//storage get quickClick
 	chrome.storage.local.get(obj, function(data){
-		var myD = data;
-		if(myD["quickClick"]){
-			document.getElementById("quickClick").value = myD["quickClick"];
+		//if quickClick setting data exists
+		if(data["quickClick"]){
+			//set value in control panel
+			document.getElementById("quickClick").value = data["quickClick"];
+			//if quickClick is on, begin edit mode right away
 			if(document.getElementById("quickClick").value == "yes"){
 				document.getElementById("prompt").innerHTML = "Click on the pop up to hide it";
 				document.getElementById("editMode").style.display = "none";
@@ -22,7 +31,7 @@ $(document).ready(function() {
 			}
 		}
 	});
-
+	//sends message to turn on crosshair and highlight elements on hover
 	document.getElementById("editMode").onclick = function() {EDIT()};
 	function EDIT(){
 		document.getElementById("prompt").innerHTML = "Click on the pop up to hide it";
@@ -34,6 +43,7 @@ $(document).ready(function() {
 			chrome.tabs.sendMessage(tabs[0].id, {tab: tabs[0].id, tabs: tabs, txt: "edit"});
 		}
 	}
+	//sends message to turn off crosshair, and the element highlight on hover
 	document.getElementById("cancel").onclick = function() {CANCEL()};
 	function CANCEL(){
 		//send message to content script
@@ -43,37 +53,10 @@ $(document).ready(function() {
 		}
 		window.close();
 	}
-	document.getElementById("remove").onclick = function() {REMOVE()};
-	function REMOVE(){
-		chrome.tabs.query(params, gotTabs);
-		function gotTabs(tabs){	
-			chrome.tabs.sendMessage(tabs[0].id, {tab: tabs[0].id, tabs: tabs, txt: "remove"});
-			chrome.tabs.reload(tabs[0].id);
-		}
-		window.close();
-	}
-	document.getElementById("gearIn").onclick = function() {SETTINGS()};
-	function SETTINGS(){
-		document.getElementById("home").style.display = "none";
-		document.getElementById("settings").style.display = "block";
-	}
-	document.getElementById("homeIcon").onclick = function() {HOME()};
-	function HOME(){
-		document.getElementById("home").style.display = "block";
-		document.getElementById("settings").style.display = "none";
-	}
-	document.getElementById("question").onclick = function() {HELP()};
-	function HELP(){
-		document.getElementById("help").style.display = "block";
-		document.getElementById("settings").style.display = "none";
-	}
-	document.getElementById("back").onclick = function() {BACK()};
-	function BACK(){
-		document.getElementById("settings").style.display = "block";
-		document.getElementById("help").style.display = "none";
-	}	
+	//changed quick click setting, sends message to save change in storage	
 	document.getElementById("quickClick").onchange = function() {QC()};
 	function QC(){
+		//send message to content script
 		chrome.tabs.query(params, gotTabs);
 		function gotTabs(tabs){	
 			chrome.tabs.sendMessage(tabs[0].id, {tab: tabs[0].id, tabs: tabs, txt: "qc", value: document.getElementById("quickClick").value});
@@ -81,4 +64,39 @@ $(document).ready(function() {
 			window.close();
 		}
 	}
+	//handles the reset data button, sends message to empty storage
+	document.getElementById("remove").onclick = function() {REMOVE()};
+	function REMOVE(){
+		//send message to content script
+		chrome.tabs.query(params, gotTabs);
+		function gotTabs(tabs){	
+			chrome.tabs.sendMessage(tabs[0].id, {tab: tabs[0].id, tabs: tabs, txt: "remove"});
+			chrome.tabs.reload(tabs[0].id);
+			window.close();
+		}
+	}
+	//open settings
+	document.getElementById("gearIn").onclick = function() {SETTINGS()};
+	function SETTINGS(){
+		document.getElementById("home").style.display = "none";
+		document.getElementById("settings").style.display = "block";
+	}
+	//back to homepage
+	document.getElementById("homeIcon").onclick = function() {HOME()};
+	function HOME(){
+		document.getElementById("home").style.display = "block";
+		document.getElementById("settings").style.display = "none";
+	}
+	//open settings help page
+	document.getElementById("question").onclick = function() {HELP()};
+	function HELP(){
+		document.getElementById("help").style.display = "block";
+		document.getElementById("settings").style.display = "none";
+	}
+	//back to settings	
+	document.getElementById("back").onclick = function() {BACK()};
+	function BACK(){
+		document.getElementById("settings").style.display = "block";
+		document.getElementById("help").style.display = "none";
+	}	
 });
