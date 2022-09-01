@@ -1,0 +1,38 @@
+html{
+	width: 140px;
+	height: 75px;
+	background-image: 
+	url('cookie.png');
+}
+
+p{
+	font-family: serif; 
+	text-align: center; 
+	font-weight: bold;
+}
+
+span{
+	font-family: serif;
+}
+
+.button{
+	margin: 0; 
+	position: absolute; 
+	top: 80%; 
+	left: 50%; 
+	-ms-transform: translate(-50%, -50%); 
+	transform: translate(-50%, -50%);
+}
+
+.select{
+	margin: 0; 
+	position: absolute; 
+	top: 38%; 
+	left: 50%;
+	-ms-transform: translate(-50%, -50%); 
+	transform: translate(-50%, -50%);
+}
+
+i:hover{
+	color: grey;
+}
